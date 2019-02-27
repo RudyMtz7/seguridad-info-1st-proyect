@@ -14,16 +14,26 @@ from Crypto.Hash import MD5
 from Crypto.Hash import SHA
 #SHA-2
 from Crypto.Hash import SHA256
+import time
 
 def main():
     #RC4
     rc4_file = open("test_vectors.txt", "r")
     for line in rc4_file:
         print(line)
+    #DES
+    des_file = open("des_vectors.txt", "r")
+    for line in des_file:
+        print(line)
+    #AES
+    aes_file = open("aes_vectors.txt", "r")
+    for line in aes_file:
+        print(line)
     #Hash Vectors
     hash_file = open("hash_vectors.txt", "r")
     for line in hash_file:
         print(line)
+
 
 def ARC4(key):
     key = b'Very long and confidential key'
