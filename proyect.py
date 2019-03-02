@@ -18,45 +18,73 @@ import time
 
 def main():
     #RC4
-    rc4_file = open("test_vectors.txt", "r")
-    for line in rc4_file:
-        print(line)
+    countA = 0
+    keysRC4 = [b'Very long and confidential key',b'Otro Mensaje raro',b'Otro Mensaje raro',b'Otro Mensaje raro',b'Otro Mensaje raro']
+    for i in range(10000):
+        if countA == 4:
+            countA=0
+        else:
+            countA+= 1
+        # print(keysRC4[count])
+        function_arc4(keysRC4[countA])
+    # rc4_file = open("test_vectors.txt", "r")
+    # for line in rc4_file:
+    #     print(line)
     #DES
-    des_file = open("des_vectors.txt", "r")
-    for line in des_file:
-        print(line)
-    #AES
-    aes_file = open("aes_vectors.txt", "r")
-    for line in aes_file:
-        print(line)
-    #Hash Vectors
-    hash_file = open("hash_vectors.txt", "r")
-    for line in hash_file:
-        print(line)
+    countB = 0
+    keysDES = [b'Sixteen byte key',b'Sixteen byte key',b'Sixteen byte key',b'Sixteen byte key',b'Sixteen byte key']
+    for i in range(10000):
+        if countB == 4:
+            countB=0
+        else:
+            countB+= 1
+        # print(keysRC4[count])
+        funtion_des(keysDES[countB])
+    # des_file = open("des_vectors.txt", "r")
+    # for line in des_file:
+    #     print(line)
+    # #AES
+    countC = 0
+    keysAES = [b'Sixteen byte key',b'Sixteen byte key',b'Sixteen byte key',b'Sixteen byte key',b'Sixteen byte key']
+    for i in range(10000):
+        if countC == 4:
+            countC=0
+        else:
+            countC+= 1
+        # print(keysRC4[count])
+        funtion_aes(keysAES[countC])
+    # aes_file = open("aes_vectors.txt", "r")
+    # for line in aes_file:
+    #     print(line)
+    # #Hash Vectors
+    # hash_file = open("hash_vectors.txt", "r")
+    # for line in hash_file:
+    #     print(line)
 
 
-def ARC4(key):
-    key = b'Very long and confidential key'
+#ARC4
+def function_arc4(key):
     nonce = Random.new().read(16)
     tempkey = SHA.new(key+nonce).digest()
     cipher = ARC4.new(tempkey)
     msg = nonce + cipher.encrypt(b'Open the pod bay doors, HAL')
+    # print(msg)
 
-
-def DES():
-    key = b'Sixteen byte key'
+#DES
+def funtion_des(key):
     iv = Random.new().read(DES3.block_size)
     cipher = DES3.new(key, DES3.MODE_OFB, iv)
     plaintext = b'sona si latine loqueris '
     msg = iv + cipher.encrypt(plaintext)
+    # print(msg)
 
-
-def AES():
+#AES
+def funtion_aes(key):
     key = b'Sixteen byte key'
     iv = Random.new().read(AES.block_size)
     cipher = AES.new(key, AES.MODE_CFB, iv)
     msg = iv + cipher.encrypt(b'Attack at dawn')
-
+    print(msg)
 
 
 def MD5():
