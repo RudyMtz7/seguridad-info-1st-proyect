@@ -4,17 +4,25 @@ from Crypto.Hash import SHA
 from Crypto import Random
 #DES
 from Crypto.Cipher import DES3
-from Crypto import Random
 #AES
 from Crypto.Cipher import AES
-from Crypto import Random
 #MD5
 from Crypto.Hash import MD5
 #SHA-1
 from Crypto.Hash import SHA
 #SHA-2
 from Crypto.Hash import SHA256
+#DSA
+from Crypto.PublicKey import DSA
+from Crypto.Random import random
+#PSS
+from Crypto.Signature import PKCS1_PSS
+#RSA
+from Crypto.PublicKey import RSA
+from Crypto.Signature import DSS
+
 import time
+import hashlib
 
 def main():
     #RC4
@@ -53,6 +61,8 @@ def main():
             countC+= 1
         # print(keysRC4[count])
         funtion_aes(keysAES[countC])
+    # function_dsa()
+    function_dsa()
     # aes_file = open("aes_vectors.txt", "r")
     # for line in aes_file:
     #     print(line)
@@ -84,7 +94,7 @@ def funtion_aes(key):
     iv = Random.new().read(AES.block_size)
     cipher = AES.new(key, AES.MODE_CFB, iv)
     msg = iv + cipher.encrypt(b'Attack at dawn')
-    print(msg)
+    # print(msg)
 
 
 def MD5():
@@ -102,5 +112,29 @@ def SHA_2():
     h = SHA256.new()
     h.update(b'Hello')
     # print h.hexdigest()
+
+def function_rsa():
+    message = '0000000000000000000000000000000000000000'
+    key = RSA.construct(1024)
+    h = SHA256.new(message)
+    signature = pss.new(key).sign(h)
+    verifier = pss.new(key)
+    print(message)
+
+def function_pss():
+    message = 'To be signed'
+    key = RSA.generate(2048)
+    h = SHA.new()
+    h.update(message.encode("utf8"))
+    signer = PKCS1_PSS.new(key)
+    # signature = PKCS1_PSS.sign(key)
+    print(message)
+
+def function_dsa():
+    hash = hashlib.new('DSA')
+    hash.update(b'Mensaje asdf')
+    hash.digest()
+    hash.hexdigest()
+    print(hash)
 
 main()
